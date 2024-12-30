@@ -7,3 +7,4 @@ git clone https://github.com/SanjanaKrishna/hello-world-war.git
 cd hello-world-war
 mvn clean package
 ls
+echo "$1 $2"
