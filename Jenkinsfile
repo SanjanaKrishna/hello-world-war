@@ -1,9 +1,8 @@
 pipeline {
-    agent any
+    agent { label 'dev' }
     
     stages {
-         agent { label 'dev' }
-        stage('CHECKOUT') {
+         stage('CHECKOUT') {
             steps {
                 // Use the built-in 'git' step
                 git url: 'https://github.com/SanjanaKrishna/hello-world-war.git'
@@ -22,11 +21,11 @@ pipeline {
         }
         
         stage('DEPLOY') {
-            steps {
+            steps {  agent { label 'Node3' }
                 script {
                     // Use SCP to copy the WAR file to the Tomcat webapps directory
                     sh """
-                    cp ${WORKSPACE}/target/hello-world-war-1.0.0.war 
+                    scp ${WORKSPACE}/target/hello-world-war-1.0.0.war 
                     ubuntu@172-31-15-174:/home/ubuntu/apache-tomcat-10.1.34/webapps/
                     """
                 }
