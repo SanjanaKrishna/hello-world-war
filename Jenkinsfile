@@ -1,36 +1,45 @@
 pipeline {
-    agent {label 'dev'}
+    agent { label 'dev' }
+    
     stages {
         stage('CHECKOUT') {
             steps {
-                git clone https://github.com/SanjanaKrishna/hello-world-war.git
+                // Use the built-in 'git' step
+                git url: 'https://github.com/SanjanaKrishna/hello-world-war.git'
                 echo 'End of Checkout'
             }
-         }
+        }
+        
         stage('BUILD') {
             steps {
-                mvn clean package
-                echo 'End of build'
+                script {
+                    // Build the WAR file using Maven
+                    sh 'mvn clean package'
+                }
+                echo 'End of Build'
             }
-            
         }
+        
         stage('DEPLOY') {
             steps {
-                 scp /home/ubuntu/jenkins/workspace/pileline_master_slave/target/hello-world-war-1.0.0 
-                
+                script {
+                    // Use SCP to copy the WAR file to the Tomcat webapps directory
+                    sh """
+                    scp ${WORKSPACE}/target/hello-world-war-1.0.0.war \
                     ubuntu@172-31-15-174:/home/ubuntu/apache-tomcat-10.1.34/webapps/
-                
+                    """
+                }
             }
         }
-     }
+    }
 
- post {
+    post {
         success {
             mail to: 'sanjanabn6@gmail.com',
-                 subject: "Build Success ",
+                 subject: "Build Success",
                  body: "The build was successful."
-         }
-     
+        }
+
         failure {
             mail to: 'sanjanabn6@gmail.com',
                  subject: "Build Failure",
