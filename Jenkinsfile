@@ -28,15 +28,6 @@ pipeline {
                         scp -o StrictHostKeyChecking=no \
                         /home/ubuntu/jenkins/workspace/pileline_master_slave/target/hello-world-war-1.0.0.war \
                         root@172.31.6.200:/opt/apache-tomcat-10.1.34/webapps/
-
-                       ssh root@172.31.6.200
-                       ls -ld /opt/apache-tomcat-10.1.34/bin/
-                       sudo chown -R ubuntu:ubuntu /opt/apache-tomcat-10.1.34
-                       sudo chmod -R 755 /opt/apache-tomcat-10.1.34
-                       
-                       cd /opt/apache-tomcat-10.1.34/bin/
-                       ./startup.sh                       
-                    '''
                 }
                 echo 'End of Deploy'
             }
