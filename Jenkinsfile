@@ -3,13 +3,20 @@ pipeline {
     stages {
         stage('CHECKOUT') {
             steps {
-                git clone 
-                echo 'Hello World'
+                git clone https://github.com/SanjanaKrishna/hello-world-war.git
+                echo 'End of Checkout'
             }
-        }
-        stage('Example2') {
+         }
+        stage('BUILD') {
             steps {
-                echo 'Hello World'
+                mvn clean package
+                echo 'End of build'
+            }
+            
+        }
+        stage('DEPLOY') {
+            steps {
+                
             }
         }
     }
