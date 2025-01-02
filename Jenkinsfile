@@ -16,8 +16,25 @@ pipeline {
         }
         stage('DEPLOY') {
             steps {
+                 scp /home/ubuntu/jenkins/workspace/pileline_master_slave/target/hello-world-war-1.0.0 
+                
+                    ubuntu@172-31-15-174:/home/ubuntu/apache-tomcat-10.1.34/webapps
                 
             }
+        }
+     }
+
+ post {
+        success {
+            mail to: 'sanjanabn6@gmail.com',
+                 subject: "Build Success ",
+                 body: "The build was successful."
+         }
+     
+        failure {
+            mail to: 'sanjanabn6@gmail.com',
+                 subject: "Build Failure",
+                 body: "The build failed."
         }
     }
 }
