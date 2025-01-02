@@ -21,13 +21,11 @@ pipeline {
         }
         
         stage('DEPLOY') {
-            steps {  agent { label 'Node3' }
+            steps {  agent { label 'dev' }
                 script {
                     // Use SCP to copy the WAR file to the Tomcat webapps directory
                     sh """
-                    scp -r /home/ubuntu/jenkins/workspace/pileline_master_slave/target/hello-world-war-1.0.0.war root@172.31.15.174:/opt/apache-tomcat-10.1.34/webapps
-
-                    """
+                    scp -r /home/ubuntu/jenkins/workspace/pileline_master_slave/target/hello-world-war-1.0.0.war ubuntu@172.31.15.174:/home/ubuntu/apache-tomcat-10.1.34/webapps/                   """
                 }
             }
         }
