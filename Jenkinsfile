@@ -31,17 +31,6 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            mail to: 'sanjanabn6@gmail.com',
-                 subject: "Build Success",
-                 body: "The build was successful."
-        }
-
-        failure {
-            mail to: 'sanjanabn6@gmail.com',
-                 subject: "Build Failure",
-                 body: "The build failed."
-        }
+   
     }
 }
