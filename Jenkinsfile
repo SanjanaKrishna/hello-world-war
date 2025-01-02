@@ -31,7 +31,7 @@ pipeline {
 
                         cd
                         cd /opt/apache-tomcat-10.1.34/bin/
-                        ./startup
+                        ./startup 
                     '''
                 }
                 echo 'End of Deploy'
