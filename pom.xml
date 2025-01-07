@@ -9,7 +9,7 @@
 	<description>Simplest possible Java Webapp</description>
 	<distributionManagement>
    	  <repository>
-        	<id>central</id>
+        	<id>hello-world-war</id>
        		<name>a0lwy6xvbstxz-artifactory-primary-0-releases</name>
                 <url>https://trialtf96q2.jfrog.io/artifactory/hello-worl-war-libs-release</url>
     	  </repository>
