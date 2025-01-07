@@ -7,6 +7,13 @@
 	<packaging>war</packaging>
 	<name>Hello World Web Application Repository</name>
 	<description>Simplest possible Java Webapp</description>
+	<distributionManagement>
+   	  <repository>
+        	<id>central</id>
+       		<name>a0lwy6xvbstxz-artifactory-primary-0-releases</name>
+                <url>https://trialtf96q2.jfrog.io/artifactory/hello-worl-war-libs-release</url>
+    	  </repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -37,5 +44,5 @@
 	    <sonar.projectKey>sanjanakrishna_hello-world-war-1</sonar.projectKey>
 	    <sonar.organization>sanjanakrishna</sonar.organization>
 	    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-</properties>
+        </properties>
 </project>
