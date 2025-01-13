@@ -33,7 +33,23 @@ jobs:
         with:
           path: ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: 
+          restore-keys:
+
+       # Install Maven (if not installed already)
+      - name: Install Maven
+        run: |
+          if ! command -v mvn &> /dev/null; then
+            echo "Maven not found, installing..."
+            sudo apt update
+            sudo apt install -y maven
+          else
+            echo "Maven is already installed"
+          fi
+
+      # Verify Maven installation
+      - name: Verify Maven installation
+        run: mvn -v
+
 
       - name: Configure Maven settings
         run: |
