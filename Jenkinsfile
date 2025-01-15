@@ -78,7 +78,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 sh """
-                
+                sudo su -
                 mv app.war ${TOMCAT_PATH}/webapps/
                 ${TOMCAT_PATH}/bin/shutdown.sh || true
                 ${TOMCAT_PATH}/bin/startup.sh
