@@ -63,13 +63,14 @@
 pipeline {
     agent any
     environment {
-        ARTIFACT_URL = '<JFrog_artifact_URL>'
-        TOMCAT_PATH = '/opt/apache/apache-tomcat'
+        ARTIFACT_URL = 'http://13.201.136.81:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.9/hello-world-war-1.0.9.war'
+        TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
     }
     stages {
         stage('Download Artifact') {
             steps {
                 sh """
+                sudo su -
                 curl -u ${env.JFROG_USERNAME}:${env.JFROG_PASSWORD} -o app.war ${ARTIFACT_URL}
                 """
             }
@@ -77,6 +78,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 sh """
+                
                 mv app.war ${TOMCAT_PATH}/webapps/
                 ${TOMCAT_PATH}/bin/shutdown.sh || true
                 ${TOMCAT_PATH}/bin/startup.sh
