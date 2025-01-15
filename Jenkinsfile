@@ -68,6 +68,7 @@ pipeline {
         ARTIFACT_URL = 'http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.${env.GITHUB_RUN_NUMBER}.war'
      //  http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.45/hello-world-war-1.0.45.war
         TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
+         GITHUB_RUN_NUMBER = "${BUILD_NUMBER}"
     }
     stages {
         stage('Download Artifact') {
