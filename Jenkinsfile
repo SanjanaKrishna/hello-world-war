@@ -71,7 +71,9 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
+                    pwd
                     cd /opt/
+                    pwd
                     ls
                     cd apache-tomcat-10.1.34
                     ls
