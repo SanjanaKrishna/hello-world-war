@@ -69,17 +69,17 @@ pipeline {
     stages {
         stage('Download Artifact') {
             steps {
-                sh """
-                sudo su -
-                curl -u ${env.JFROG_USERNAME}:${env.JFROG_PASSWORD} -o app.war ${ARTIFACT_URL}
-                """
+                withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                    curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war.war "${ARTIFACT_URL}"
+                    """
+                }
             }
         }
         stage('Deploy to Tomcat') {
             steps {
                 sh """
-                sudo su -
-                mv app.war ${TOMCAT_PATH}/webapps/
+                mv hello-world-war.war ${TOMCAT_PATH}/webapps/
                 ${TOMCAT_PATH}/bin/shutdown.sh || true
                 ${TOMCAT_PATH}/bin/startup.sh
                 """
@@ -87,6 +87,5 @@ pipeline {
         }
     }
 }
-
 
    
