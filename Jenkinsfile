@@ -73,10 +73,13 @@ pipeline {
                     sh """
                     pwd
                     cd 
+                    cd /home/ubuntu
+                    pwd
                     cd /opt/
                     pwd
                     ls
-                    cd apache-tomcat-10.1.34
+                    cd apache-tomcat-10.1.34/
+                    pwd
                     ls
                     cd webapps
                     curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war.war "${ARTIFACT_URL}"
