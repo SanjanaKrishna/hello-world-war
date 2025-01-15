@@ -84,11 +84,11 @@ pipeline {
                     curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war.war "${ARTIFACT_URL}"
                     cd ..
                     pwd
-                    cd /bin/
+                    cd bin/
                     ./shutdown.sh
                     sleep 10
                     ./startup.sh
-                    echo"Tomcat Started "
+                    echo"Tomcat Started"
                     
                     """
                 }
