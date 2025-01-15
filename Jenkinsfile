@@ -71,7 +71,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
-                    sudo su 
                     cd /opt/apache-tomcat-10.1.34/webapps
                     curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war.war "${ARTIFACT_URL}"
                     cd ..
