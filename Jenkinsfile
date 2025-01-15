@@ -65,27 +65,39 @@ pipeline {
     environment {
         ARTIFACT_URL = 'http://13.201.136.81:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.9/hello-world-war-1.0.9.war'
         TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
-    }
+                }
     stages {
         stage('Download Artifact') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
+                    sudo su -
+                    cd /opt/apache-tomcat-10.1.34/webapps
                     curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war.war "${ARTIFACT_URL}"
+                    cd ..
+                    pwd
+                    cd /bin/
+                    ./shutdown.sh
+                    sleep 10
+                    ./startup.sh
+                    echo"Tomcat Started "
+                    
                     """
                 }
             }
         }
-        stage('Deploy to Tomcat') {
-            steps {
-                sh """
-                mv hello-world-war.war ${TOMCAT_PATH}/webapps/
-                ${TOMCAT_PATH}/bin/shutdown.sh || true
-                ${TOMCAT_PATH}/bin/startup.sh
-                """
-            }
-        }
     }
-}
+  }
+        // stage('Deploy to Tomcat') {
+        //     steps {
+        //         sh """
+        //         mv hello-world-war.war ${TOMCAT_PATH}/webapps/
+        //         ${TOMCAT_PATH}/bin/shutdown.sh || true
+        //         ${TOMCAT_PATH}/bin/startup.sh
+        //         """
+        //     }
+        // }
+    
+
 
    
