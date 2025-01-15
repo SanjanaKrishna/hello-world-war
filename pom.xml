@@ -12,7 +12,7 @@
 	    <repository>
 	        <id>hello-world-war</id>
 	        <name>hello-world-war-libs-release</name>
-	        <url>http://13.232.87.52:8082/artifactory/hello-world-war-libs-release/</url>
+	        <url>http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/</url>
 		    
 	    </repository>
   	</distributionManagement>
