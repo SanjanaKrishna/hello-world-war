@@ -63,7 +63,10 @@
 pipeline {
     agent any
     environment {
-        ARTIFACT_URL = 'http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.${GITHUB_RUN_NUMBER}/hello-world-war-1.0.${GITHUB_RUN_NUMBER}.war'
+         //curl -L -u "env.ARTIFACTORY_USERNAME:env.ARTIFACTORY_API_KEY" -O "http://52.66.123.40:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.0.${env.GITHUB_RUN_NUMBER}.war"
+                
+        ARTIFACT_URL = 'http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.${env.GITHUB_RUN_NUMBER}.war'
+     //  http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.45/hello-world-war-1.0.45.war
         TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
     }
     stages {
@@ -72,13 +75,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     sudo su
-                    pwd
                     cd /opt/
-                    pwd
-                    ls
                     cd apache-tomcat-10.1.34/
-                    pwd
-                    ls
                     cd webapps
 
                     # Correct usage of environment variables for curl
