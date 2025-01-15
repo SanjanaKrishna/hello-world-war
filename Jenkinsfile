@@ -88,8 +88,7 @@ pipeline {
                     ./shutdown.sh
                     sleep 10
                     ./startup.sh
-                    echo"Tomcat Started"
-                    
+                                     
                     """
                 }
             }
