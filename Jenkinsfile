@@ -63,8 +63,8 @@
 pipeline {
     agent any
     environment {
-        ARTIFACT_URL = 'http://13.201.136.81:8082/artifactory/hello-world-war-libs-release/com/efsavage/ hello-world-war/1.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.${env.GITHUB_RUN_NUMBER}.war'
-                                                            
+        ARTIFACT_URL = 'http://65.0.91.101:8082/artifactory/hello-world-war-libs-release/com/efsavage/ hello-world-war/1.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.${env.GITHUB_RUN_NUMBER}.war'
+                                                         
         TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
                 }
     stages {
@@ -82,7 +82,10 @@ pipeline {
                     pwd
                     ls
                     cd webapps
-                    curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war.war "${ARTIFACT_URL}"
+                    // curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war1.0.${env.GITHUB_RUN_NUMBER}.war "${ARTIFACT_URL}"
+                    
+                    curl -L -u "env.ARTIFACTORY_USERNAME:env.ARTIFACTORY_API_KEY" -O "http://65.0.91.101/:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.0.${env.GITHUB_RUN_NUMBER}.war"
+                
                     cd ..
                     pwd
                     cd bin/
