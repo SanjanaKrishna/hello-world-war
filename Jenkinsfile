@@ -71,15 +71,12 @@ pipeline {
     //     GITHUB_RUN_NUMBER = "${BUILD_NUMBER}"
     }
     stages {
-        stage('Download Artifact') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    stage('Debug Environment') {
-                      steps {
+                       withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                  
                         echo "Run Number: ${GITHUB_RUN_NUMBER}"
                         echo "Artifact URL: ${ARTIFACT_URL}"
-                           }
-                    }
+                        
+                    
                     sh """
                     sudo su
                     cd /opt/
