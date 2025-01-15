@@ -65,15 +65,21 @@ pipeline {
     environment {
          //curl -L -u "env.ARTIFACTORY_USERNAME:env.ARTIFACTORY_API_KEY" -O "http://52.66.123.40:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.0.${env.GITHUB_RUN_NUMBER}.war"
                 
-        ARTIFACT_URL = 'http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.${env.GITHUB_RUN_NUMBER}.war'
+        ARTIFACT_URL = 'http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.${GITHUB_RUN_NUMBER}/hello-world-war-1.0.${GITHUB_RUN_NUMBER}.war'
      //  http://3.6.37.18:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.45/hello-world-war-1.0.45.war
         TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
-         GITHUB_RUN_NUMBER = "${BUILD_NUMBER}"
+    //     GITHUB_RUN_NUMBER = "${BUILD_NUMBER}"
     }
     stages {
         stage('Download Artifact') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    stage('Debug Environment') {
+                      steps {
+                        echo "Run Number: ${GITHUB_RUN_NUMBER}"
+                        echo "Artifact URL: ${ARTIFACT_URL}"
+                           }
+                    }
                     sh """
                     sudo su
                     cd /opt/
@@ -96,16 +102,7 @@ pipeline {
     }
 }
 
-        // stage('Deploy to Tomcat') {
-        //     steps {
-        //         sh """
-        //         mv hello-world-war.war ${TOMCAT_PATH}/webapps/
-        //         ${TOMCAT_PATH}/bin/shutdown.sh || true
-        //         ${TOMCAT_PATH}/bin/startup.sh
-        //         """
-        //     }
-        // }
-    
+      
 
 
    
