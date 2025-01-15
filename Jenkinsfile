@@ -63,18 +63,16 @@
 pipeline {
     agent any
     environment {
-        ARTIFACT_URL = 'http://65.0.91.101:8082/artifactory/hello-world-war-libs-release/com/efsavage/ hello-world-war/1.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.${env.GITHUB_RUN_NUMBER}.war'
-                                                         
+        ARTIFACT_URL = 'http://65.0.91.101:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.${GITHUB_RUN_NUMBER}/hello-world-war-1.0.${GITHUB_RUN_NUMBER}.war'
         TOMCAT_PATH = '/opt/apache-tomcat-10.1.34'
-                }
+    }
     stages {
         stage('Download Artifact') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
-                    sudo su 
+                    sudo su
                     pwd
-                    cd 
                     cd /opt/
                     pwd
                     ls
@@ -82,23 +80,23 @@ pipeline {
                     pwd
                     ls
                     cd webapps
-                    // curl -L -u "${USERNAME}:${PASSWORD}" -o hello-world-war1.0.${env.GITHUB_RUN_NUMBER}.war "${ARTIFACT_URL}"
-                    
-                    curl -L -u "env.ARTIFACTORY_USERNAME:env.ARTIFACTORY_API_KEY" -O "http://65.0.91.101/:8082/artifactory/hello-world-war-libs-release/com/efsavage/hello-world-war/1.0.0.${env.GITHUB_RUN_NUMBER}/hello-world-war-1.0.0.${env.GITHUB_RUN_NUMBER}.war"
-                
+
+                    # Correct usage of environment variables for curl
+                    curl -L -u "\$USERNAME:\$PASSWORD" -O "\$ARTIFACT_URL"
+
                     cd ..
                     pwd
                     cd bin/
                     ./shutdown.sh
                     sleep 10
                     ./startup.sh
-                                     
                     """
                 }
             }
         }
     }
-  }
+}
+
         // stage('Deploy to Tomcat') {
         //     steps {
         //         sh """
