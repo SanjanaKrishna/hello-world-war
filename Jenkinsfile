@@ -71,10 +71,9 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
+                    sudo su 
                     pwd
                     cd 
-                    cd /home/ubuntu
-                    pwd
                     cd /opt/
                     pwd
                     ls
