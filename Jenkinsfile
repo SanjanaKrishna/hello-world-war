@@ -72,6 +72,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'artifactory-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     pwd
+                    cd 
                     cd /opt/
                     pwd
                     ls
