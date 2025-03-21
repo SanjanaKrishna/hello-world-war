@@ -32,12 +32,12 @@ pipeline {
             }
         }
     }
-   post {
-    always {
-        node {
-            sh 'docker logout'
-        }
-    }
-}
+//    post {
+//     always {
+//         node {
+//             sh 'docker logout'
+//         }
+//     }
+// }
 }
 
