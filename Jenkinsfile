@@ -1,34 +1,39 @@
 pipeline {
     agent any 
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_REPO = 'sanjanabn25/hello-world-war'
     }
     stages { 
         stage('SCM Checkout') {
-            steps{
-            git 'https://github.com/SanjanaKrishna/hello-world-war.git'
+            steps {
+                git 'https://github.com/SanjanaKrishna/hello-world-war.git'
             }
         }
-
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t hello-world-war:$BUILD_NUMBER .'
+                sh 'sudo docker build -t $DOCKERHUB_REPO:$BUILD_NUMBER .'
             }
         }
-        stage('login to dockerhub') {
-            steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        stage('Login to DockerHub') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage('push image') {
-            steps{
-                sh 'docker push hello-world-war:$BUILD_NUMBER'
+        stage('Push image') {
+            steps {
+                sh 'sudo docker push $DOCKERHUB_REPO:$BUILD_NUMBER'
             }
         }
-}
-post {
+        stage('Deploy Container') {
+            steps {
+                sh 'sudo docker run -d -p 8080:8080 $DOCKERHUB_REPO:$BUILD_NUMBER'
+            }
+        }
+    }
+    post {
         always {
-            sh 'docker logout'
+            sh 'sudo docker logout'
         }
     }
 }
