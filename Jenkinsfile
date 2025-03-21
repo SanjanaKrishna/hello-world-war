@@ -8,7 +8,10 @@ pipeline {
         stage('SCM Checkout') { 
             steps {
                 sh 'docker --version'
-                checkout scm   // This properly checks out the repo
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    userRemoteConfigs: [[url: 'https://github.com/SanjanaKrishna/hello-world-war.git']]
+                ])
             }
         }
         stage('Build docker image') {
@@ -28,7 +31,7 @@ pipeline {
         }
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d -p 8080:8080 $DOCKERHUB_REPO:$BUILD_NUMBER'
+                sh 'docker run -d -p 8085:8080 $DOCKERHUB_REPO:$BUILD_NUMBER'
             }
         }
     }
