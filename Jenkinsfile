@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d -p 8085:8080 $DOCKERHUB_REPO:$BUILD_NUMBER'
+                sh 'docker run -d -p 8086:8080 $DOCKERHUB_REPO:$BUILD_NUMBER'
             }
         }
     }
