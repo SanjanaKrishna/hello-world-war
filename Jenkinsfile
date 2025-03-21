@@ -7,8 +7,8 @@ pipeline {
     stages { 
         stage('SCM Checkout') { 
             steps {
-                 sh 'docker --version'
-                git 'https://github.com/SanjanaKrishna/hello-world-war.git'
+                sh 'docker --version'
+                checkout scm   // This properly checks out the repo
             }
         }
         stage('Build docker image') {
