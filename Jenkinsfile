@@ -7,6 +7,7 @@ pipeline {
     stages { 
         stage('SCM Checkout') { 
             steps {
+                 sh 'docker --version'
                 git 'https://github.com/SanjanaKrishna/hello-world-war.git'
             }
         }
